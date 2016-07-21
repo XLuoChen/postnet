@@ -18,6 +18,7 @@ function getBarcodes(barcode) {
     barcodes.push(substring);
     start += 5;
   }
+  
   return barcodes;
 }
 

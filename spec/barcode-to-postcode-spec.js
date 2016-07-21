@@ -76,10 +76,10 @@ describe('convert barcode to postcode', () => {
     });
 
     it("if length of digits  equal 5 should convert", () => {
-      digits = [4, 5, 0, 5, 6];
+      digits = [4, 5, 1, 5, 6];
       const postcode = barcodeToPostcode.convertPostcode(digits);
 
-      expect(postcode).toEqual('45056');
+      expect(postcode).toEqual('45156');
     });
   });
 });
