@@ -3,9 +3,7 @@
 function checkBarcode(barcode) {
   const barcodeArray = barcode.split('');
   return (barcode[0] === '|' && barcodeArray[barcodeArray.length - 1] === '|'
-  && ((barcodeArray.length - 2) / 5 === 6 || (barcodeArray.length - 2) / 5 === 10))
-
-    ? true : false;
+  && ((barcodeArray.length - 2) / 5 === 6 || (barcodeArray.length - 2) / 5 === 10));
 }
 
 function getBarcodes(barcode) {
@@ -18,7 +16,7 @@ function getBarcodes(barcode) {
     barcodes.push(substring);
     start += 5;
   }
-  
+
   return barcodes;
 }
 

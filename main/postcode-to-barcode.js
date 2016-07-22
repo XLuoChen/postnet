@@ -2,7 +2,8 @@
 
 function checkPostcode(postcode) {
 
-  return (postcode.length === 10 || postcode.length === 5 || postcode.length === 9) ? true : false;
+  return (/\d\d\d\d\d/g.test(postcode) || /\d\d\d\d\d\-\d\d\d\d/g.test(postcode))
+    && (postcode.length === 10 || postcode.length === 5 || postcode.length === 9);
 }
 
 function getPostcodes(postcode) {
