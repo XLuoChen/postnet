@@ -44,7 +44,7 @@ describe('convert barcode to postcode', () => {
 
   it('should get digits', () => {
     const barcodes = [':|::|', ':|:|:', '||:::'];
-    const weight = barcodeToPostcode.loadWeight();
+    const weight = barcodeToPostcode.loadWeights();
     const digits = barcodeToPostcode.getDigits(barcodes, weight);
 
     expect(digits).toEqual([4, 5, 0]);

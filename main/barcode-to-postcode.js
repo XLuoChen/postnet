@@ -17,35 +17,29 @@ function getCodeWithoutBar(bar, barcode) {
 
 function getBarcodes(barcode) {
   const barcodes = [];
-  let start = 0;
 
-  const code = getCodeWithoutBar('|', barcode);
+  const codes = getCodeWithoutBar('|', barcode);
 
-  while (start < barcode.length - 5) {
-
-    barcodes.push(code.substring(start, start + 5));
-
-    start += 5;
+  for (let start = 0; start < barcode.length - 5; start += 5) {
+    barcodes.push(codes.substring(start, start + 5));
   }
 
   return barcodes;
 }
 
-function getDigits(barcodes, weight) {
+function getDigits(barcodes, weights) {
   return barcodes.map(barcode => {
-    const columns = barcode.split('');
-    let i = 0;
-    let sum = 0;
-    const codeArray = columns.map(column => column === '|' ? 1 : 0);
 
-    for (const element of codeArray) {
-      sum += element * weight[i++];
-    }
+    const sum = barcode
+      .split('')
+      .map(line => line === '|' ? 1 : 0)
+      .reduce((prev, curr, index) => prev + curr * weights[index], 0);
+
     return (sum === 11) ? 0 : sum;
-  })
+  });
 }
 
-function loadWeight() {
+function loadWeights() {
   return [7, 4, 2, 1, 0];
 }
 
@@ -60,7 +54,7 @@ function convertPostcode(digits) {
 
   const partOne = digitsString.substring(0, 5);
   const partTwo = digitsString.substring(5, digitsString.length);
-  
+
   return (digitsString.length > 5) ? `${partOne}-${partTwo}` : `${partOne}`;
 }
 
@@ -68,7 +62,7 @@ module.exports = {
   checkBarcode,
   getBarcodes,
   getDigits,
-  loadWeight,
+  loadWeights,
   checkDigits,
   convertPostcode
 };
