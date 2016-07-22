@@ -7,7 +7,7 @@ describe('convert barcode to postcode', () => {
   describe('checkBarcode', ()=> {
     let barcode;
 
-    it('when input valid barcode should return false', () => {
+    it('should return false when input valid barcode', () => {
       barcode = ':|::|:|:|:||::::|:|::||:::::||::|:|::||::|::|||:::';
 
       const isCorrect = barcodeToPostcode.checkBarcode(barcode);
@@ -15,7 +15,7 @@ describe('convert barcode to postcode', () => {
       expect(isCorrect).toBe(false);
     });
 
-    it('when input valid barcode should return false', () => {
+    it('should return false when input valid barcode', () => {
       barcode = ':|::|:|::|:|::|:|:|:||::::|:|::||:::::||::|:|::||::|::|||:::';
 
       const isCorrect = barcodeToPostcode.checkBarcode(barcode);
@@ -23,7 +23,7 @@ describe('convert barcode to postcode', () => {
       expect(isCorrect).toBe(false);
     });
 
-    it('when input correct barcode should return true', () => {
+    it('should return true when input correct barcode', () => {
       barcode = '|:|::|:|:|:||::::|:|::||:::::||::|:|::||::|::|||:::|';
 
       const isCorrect = barcodeToPostcode.checkBarcode(barcode);
@@ -32,7 +32,7 @@ describe('convert barcode to postcode', () => {
     });
   });
 
-  it('get barcodes', () => {
+  it('should get barcodes', () => {
     const barcode = '|:|::|:|:|:||::::|:|::||:::::||::|:|::||::|::|||:::|';
     const barcodes = barcodeToPostcode.getBarcodes(barcode);
 
@@ -50,14 +50,14 @@ describe('convert barcode to postcode', () => {
   describe('checkCodes', () => {
     let digits;
 
-    it('when check success should return true', () => {
+    it('should return true when check success', () => {
       digits = [9, 5, 7, 1, 3, 5];
       const isCorrect = barcodeToPostcode.checkDigits(digits);
 
       expect(isCorrect).toEqual(true);
     });
 
-    it('when check failed should return false', () => {
+    it('should return false when check failed', () => {
       digits = [9, 5, 7, 1, 3, 4];
       const isCorrect = barcodeToPostcode.checkDigits(digits);
 
@@ -65,17 +65,17 @@ describe('convert barcode to postcode', () => {
     });
   });
 
-  describe('should convert postcode', () => {
+  describe('convert postcode', () => {
     let digits;
 
-    it("if length of digits more than 5 should add '-'", () => {
+    it("should add '-' if length of digits more than 5 ", () => {
       digits = [4, 5, 0, 5, 6, 1, 2, 3, 4];
       const postcode = barcodeToPostcode.convertPostcode(digits);
 
       expect(postcode).toEqual('45056-1234');
     });
 
-    it("if length of digits  equal 5 should convert", () => {
+    it("should convert if length of digits  equal 5", () => {
       digits = [4, 5, 1, 5, 6];
       const postcode = barcodeToPostcode.convertPostcode(digits);
 

@@ -2,18 +2,29 @@
 
 function checkBarcode(barcode) {
   const barcodeArray = barcode.split('');
-  return (barcode[0] === '|' && barcodeArray[barcodeArray.length - 1] === '|'
-  && ((barcodeArray.length - 2) / 5 === 6 || (barcodeArray.length - 2) / 5 === 10));
+  const bar = '|';
+  const codesLength = (barcodeArray.length - bar.length * 2) / 5;
+
+  return (barcode[0] === bar && barcodeArray[barcodeArray.length - 1] === bar
+  && (codesLength === 6 || codesLength === 10));
+}
+
+function getCodeWithoutBar(bar, barcode) {
+  if (bar === '|') {
+    return barcode.substring(1, barcode.length - 1);
+  }
 }
 
 function getBarcodes(barcode) {
   const barcodes = [];
-  let start = 1;
+  let start = 0;
 
-  while (start < barcode.length - 1) {
+  const code = getCodeWithoutBar('|', barcode);
 
-    let substring = barcode.substring(start, start + 5);
-    barcodes.push(substring);
+  while (start < barcode.length - 5) {
+
+    barcodes.push(code.substring(start, start + 5));
+
     start += 5;
   }
 
@@ -25,12 +36,12 @@ function getDigits(barcodes, weight) {
     const columns = barcode.split('');
     let i = 0;
     let sum = 0;
-    columns.map(column => {
-      sum += (column === '|' ? 1 : 0) * weight[i++];
-      sum = (sum === 11) ? 0 : sum;
-    });
+    const codeArray = columns.map(column => column === '|' ? 1 : 0);
 
-    return sum;
+    for (const element of codeArray) {
+      sum += element * weight[i++];
+    }
+    return (sum === 11) ? 0 : sum;
   })
 }
 
@@ -39,28 +50,25 @@ function loadWeight() {
 }
 
 function checkDigits(digits) {
-  let sum = 0;
+  const sum = digits.reduce((prev, curr) => prev + curr);
 
-  for (const digit of digits) {
-    sum += digit;
-  }
-
-  return (sum % 10 === 0) ? true : false;
+  return (sum % 10 === 0);
 }
 
 function convertPostcode(digits) {
   const digitsString = digits.join('');
 
-  return (digitsString.length > 5) ?
-    `${digitsString.substring(0, 5)}-${digitsString.substring(5, digitsString.length)}`
-    : `${digitsString.substring(0, 5)}`;
+  const partOne = digitsString.substring(0, 5);
+  const partTwo = digitsString.substring(5, digitsString.length);
+  
+  return (digitsString.length > 5) ? `${partOne}-${partTwo}` : `${partOne}`;
 }
 
 module.exports = {
-  checkBarcode: checkBarcode,
-  getBarcodes: getBarcodes,
-  getDigits: getDigits,
-  loadWeight: loadWeight,
-  checkDigits: checkDigits,
-  convertPostcode: convertPostcode
+  checkBarcode,
+  getBarcodes,
+  getDigits,
+  loadWeight,
+  checkDigits,
+  convertPostcode
 };
