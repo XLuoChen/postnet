@@ -53,9 +53,9 @@ function convertPostcode(digits) {
   const digitsString = digits.join('');
 
   const partOne = digitsString.substring(0, 5);
-  const partTwo = digitsString.substring(5, digitsString.length);
+  const partTwo = digitsString.substring(5, digitsString.length - 1);
 
-  return (digitsString.length > 5) ? `${partOne}-${partTwo}` : `${partOne}`;
+  return (digitsString.length > 6) ? `${partOne}-${partTwo}` : `${partOne}`;
 }
 
 module.exports = {
